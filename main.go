@@ -54,9 +54,9 @@ func hello(w http.ResponseWriter, r *http.Request) {
 	var http_status int
 
 	if !is_valid{
-		http_status = 400
+		http_status = http.StatusBadRequest
 	} else {
-		http_status = 200
+		http_status = http.StatusOK
 		msg = "Result: " + name
 	}
 	res = create_response(http_status, msg)
@@ -65,6 +65,7 @@ func hello(w http.ResponseWriter, r *http.Request) {
     	if err != nil {
 		log.Fatal(err)
     	}
+	w.WriteHeader(http_status)
     	w.Header().Set("Content-Type", "application/json")
     	w.Write(json)
 }
